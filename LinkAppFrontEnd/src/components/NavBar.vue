@@ -31,21 +31,23 @@
                       </li>
                 </ul>
 
-                 <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
+                 <ul v-if="!currentUser" class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
                     <li class="nav-item">
                              <RouterLink lass="nav-link link text-black display-1" to="/login">Login</RouterLink>
                       </li>
                 </ul>
 
-                <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
+                <ul v-if="!currentUser" class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
                     <li class="nav-item">
                              <RouterLink lass="nav-link link text-black display-1" to="/register">Register</RouterLink>
                       </li>
                 </ul>
-
-
-
                 
+                <ul v-if="currentUser" class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
+                    <li class="nav-item">
+                             <a @click.prevent="logOut" lass="nav-link link text-black display-1" >Logout</a>
+                      </li>
+                </ul>
                 
             </div>
         </div>
@@ -56,6 +58,28 @@
 
 
 </template>
+
+<script>
+
+export default {
+
+ computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+
+  },
+  methods: {
+    logOut() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    }
+  }
+};
+
+
+</script>
+
 
 <style scoped>
 

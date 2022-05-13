@@ -8,7 +8,7 @@
         </div>
         <div class="row justify-content-center mt-5 pt-4 pb-5 pt-5 card_row">
             <div class="col-lg-4 mx-auto mbr-form bg-light card_login mb-5" data-form-type="formoid">
-                <form action="https://mobirise.eu/" method="POST" class="mbr-form form-with-styler mx-auto " data-form-title="Form Name"><input type="hidden" name="email" data-form-email="true" value="qLJlC8P3k5gwkWFTrTFYM5yhnwQuUmo29EImeOt6tHcUWEmE1jpOXCtm88F1PFioyslVcUBNd0z6GDXjoPhAaQowSeJ/yU3tgy51+Qc1HJorcXWly+m7P3VvY2TAUmnE">
+                <Form @submit="handleLogin" :validation-schema="schema"  class="mbr-form form-with-styler mx-auto " data-form-title="Form Name">
                     <p class="mbr-text mbr-fonts-style align-center mb-4 display-7">
                        Login
                     </p>
@@ -21,20 +21,31 @@
                     <div class="dragArea row">
                         
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="email">
-                            <input type="email" name="email" placeholder="Email" data-form-field="email" class="form-control" value="" id="email-form7-n">
+                            <Field type="email" name="email" placeholder="Email" data-form-field="email" class="form-control" value="" id="email-form7-n"/>
+                                 <ErrorMessage name="email" class="error-feedback" />
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="name">
-                            <input type="text" name="password" placeholder="Password" data-form-field="Password" class="form-control" value="" id="name-form7-n">
+                            <Field type="password" name="password" placeholder="Password" data-form-field="Password" class="form-control" value="" id="name-form7-n"/>
+                            <ErrorMessage name="password" class="error-feedback" />
                         </div>
 
                         <a class="item-subtitle mbr-fonts-style mt-1 align-right">Forgot Password</a>
                     
-                        <div class="col-auto mbr-section-btn align-center">
-                            <button type="submit" class="btn btn-primary display-4">Submit</button>
-                        </div>
+                        <!-- <div class="col-auto mbr-section-btn align-center">
+                            <button  class="btn btn-primary display-4">Submit</button>
+                        </div> -->
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block" :disabled="loading">
+                                    <span
+                                    v-show="loading"
+                                    class="spinner-border spinner-border-sm"
+                                    ></span>
+                                <span>Login</span>
+                            </button>
+                            </div>
                     </div>
-                </form>
+                </Form>
             </div>
         </div>
     </div>
@@ -43,10 +54,71 @@
 
 </template>
 
+<script>
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
+export default {
+  name: "Login",
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
+  data() {
+    const schema = yup.object().shape({
+      email: yup.string().required("Email is required!"),
+      password: yup.string().required("Password is required!"),
+    });
+    return {
+      loading: false,
+      message: "",
+      schema,
+    };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  created() {
+    if (this.loggedIn) {
+        this.$router.push('/profile');
+    }
+    },
+  methods: {
+    handleLogin(user) {
+
+      this.loading = true;
+
+      this.$store.dispatch("auth/login", user).then(
+        (data) => {
+            console.log(data);
+            return
+             this.$router.push("/profile");
+        },
+        (error) => {
+          this.loading = false;
+          this.message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+        }
+      );
+    },
+  },
+};
+</script>
+
+
+
 <style scoped>
 .card_login {
     padding: 20px;
 }
 
 </style>
+
+
 
