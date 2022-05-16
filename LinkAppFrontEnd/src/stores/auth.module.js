@@ -8,16 +8,29 @@ export const auth = {
   state: initialState,
   actions: {
     login({ commit }, user) {
-        console.log()
       return AuthService.login(user).then(
-        user => {
-          commit('loginSuccess', user);
-          return Promise.resolve(user);
-        },
-        error => {
+        response => {
+          console.log(response, 'hellllleee');
+          if(response.success == false){
           commit('loginFailure');
-          return Promise.reject(error);
-        }
+          return Promise.reject(response.message);
+          }
+
+          if(response.success == true){
+           // console.log('loginSuccess',response)
+            commit('loginSuccess', response.user);
+            return Promise.resolve(response.user);
+          }
+          else {
+            error => {
+              console.log('422323232323')
+              commit('loginFailure');
+              return Promise.reject(error);
+            }
+
+          }
+        },
+       
       );
     },
     logout({ commit }) {
@@ -27,10 +40,23 @@ export const auth = {
     register({ commit }, user) {
       return AuthService.register(user).then(
         response => {
-          commit('registerSuccess');
-          return Promise.resolve(response.data);
+          if(response.data.error ){
+            console.log(response.data.error);
+
+          commit('registerFailure');
+          return Promise.reject(response.data.error);
+          }
+          else {
+            console.log('esponse.data', response.data)
+            commit('registerSuccess');
+            return Promise.resolve(response.data);
+
+          }
+
+        
         },
         error => {
+          console.log('down')
           commit('registerFailure');
           return Promise.reject(error);
         }

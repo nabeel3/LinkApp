@@ -31,9 +31,19 @@
                       </li>
                 </ul>
 
+                 
+
+               
+
                  <ul v-if="!currentUser" class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
                     <li class="nav-item">
                              <RouterLink lass="nav-link link text-black display-1" to="/login">Login</RouterLink>
+                      </li>
+                </ul>
+
+                <ul v-if="currentUser" class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
+                    <li class="nav-item">
+                             <RouterLink lass="nav-link link text-black display-1" to="/admin">adminnn</RouterLink>
                       </li>
                 </ul>
 
@@ -65,11 +75,18 @@ export default {
 
  computed: {
     currentUser() {
+     console.log('this.$store.state.auth.user',this.$store.state.auth.user);
       return this.$store.state.auth.user;
     },
 
   },
   methods: {
+      showAdminBoard() {
+      if (this.currentUser && this.currentUser['roles']) {
+        return this.currentUser['roles'].includes('ROLE_ADMIN');
+      }
+      return false;
+    },
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');

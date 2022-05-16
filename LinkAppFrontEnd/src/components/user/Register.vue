@@ -1,5 +1,10 @@
 <template>
-<section data-bs-version="5.1" class="form7 cid-t5BHFLPqup" id="form7-n">    
+  
+
+
+
+    <section data-bs-version="5.1" class="form7 cid-t5BHFLPqup" id="form7-n">    
+ 
     <div class="cotainer">
         <div class="mbr-section-head">
             <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
@@ -8,9 +13,10 @@
         </div>
         <div class="row justify-content-center mt-5 pt-4 pb-5 pt-5 card_row">
             <div class="col-lg-4 mx-auto mbr-form bg-light card_login mb-5" data-form-type="formoid">
-                <form @submit="handleRegister" :validation-schema="schema" method="POST" class="mbr-form form-with-styler mx-auto " data-form-title="Form Name"><input type="hidden" name="email" data-form-email="true" value="qLJlC8P3k5gwkWFTrTFYM5yhnwQuUmo29EImeOt6tHcUWEmE1jpOXCtm88F1PFioyslVcUBNd0z6GDXjoPhAaQowSeJ/yU3tgy51+Qc1HJorcXWly+m7P3VvY2TAUmnE">
+                <div v-if="!successful">
+                <Form @submit="handleRegister" :validation-schema="schema"  class="mbr-form form-with-styler mx-auto " data-form-title="Form Name">
                     <p class="mbr-text mbr-fonts-style align-center mb-4 display-7">
-                     Register
+                       Login
                     </p>
                     <div class="row">
                         <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Thanks for filling out the form!</div>
@@ -19,45 +25,66 @@
                         </div>
                     </div>
                     <div class="dragArea row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="name">
-                            <input type="text" name="name" placeholder="Name" data-form-field="name" class="form-control" value="" id="name-form7-n">
-                            <ErrorMessage name="name" class="error-feedback" />
+
+                       <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="email">
+                            <Field type="email" name="username" placeholder="username" data-form-field="username" class="form-control" value="" id="email-form7-n"/>
+                                 <ErrorMessage name="username" class="error-feedback" />
                         </div>
 
+                        
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="email">
-                            <input type="email" name="email" placeholder="Email" data-form-field="email" class="form-control" value="" id="email-form7-n">
-                            <ErrorMessage name="email" class="error-feedback" />
-                        </div>
-
-                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="name">
-                            <input type="text" name="password" placeholder="Password" data-form-field="password" class="form-control" value="" id="name-form7-n">
-                                   <ErrorMessage name="password" class="error-feedback" />
+                            <Field type="email" name="email" placeholder="Email" data-form-field="email" class="form-control" value="" id="email-form7-n"/>
+                                 <ErrorMessage name="email" class="error-feedback" />
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="name">
-                            <input type="text" name="confirm_password" placeholder="Confirm Password" data-form-field="confirm_password" class="form-control" value="" id="name-form7-n">
-                                   <ErrorMessage name="confirm_password" class="error-feedback" />
+                            <Field type="password" name="password" placeholder="Password" data-form-field="Password" class="form-control" value="" id="name-form7-n"/>
+                            <ErrorMessage name="password" class="error-feedback" />
                         </div>
+
+                        <a class="item-subtitle mbr-fonts-style mt-1 align-right">Forgot Password</a>
                     
-                        <div class="col-auto mbr-section-btn align-center">
-                            <button type="submit" class="btn btn-primary display-4">Submit</button>
-                        </div>
+                        <!-- <div class="col-auto mbr-section-btn align-center">
+                            <button  class="btn btn-primary display-4">Submit</button>
+                        </div> -->
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block" :disabled="loading">
+                                    <span
+                                    v-show="loading"
+                                    class="spinner-border spinner-border-sm"
+                                    ></span>
+                                <span>Login</span>
+                            </button>
+                            </div>
                     </div>
-                </form>
-                    <div
-                        v-if="message"
-                        class="alert"
-                        :class="successful ? 'alert-success' : 'alert-danger'"
-                        >
-                        {{ message }}
-                    </div>
+                </Form>
+                 </div>
+                <div
+                  v-if="message"
+                  class="alert"
+                  :class="successful ? 'alert-success' : 'alert-danger'"
+                  >
+                  {{ message }}
+                </div>
+               
             </div>
         </div>
     </div>
 </section>
+  
+
+
+  
+
+
+
+
+
+
 
 
 </template>
+
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
@@ -71,7 +98,7 @@ export default {
   },
   data() {
     const schema = yup.object().shape({
-      name: yup
+      username: yup
         .string()
         .required("Username is required!")
         .min(3, "Must be at least 3 characters!")
@@ -84,11 +111,6 @@ export default {
       password: yup
         .string()
         .required("Password is required!")
-        .min(6, "Must be at least 6 characters!")
-        .max(40, "Must be maximum 40 characters!"),
-     confirm_password: yup
-        .string()
-        .required("Confimr Password is required!")
         .min(6, "Must be at least 6 characters!")
         .max(40, "Must be maximum 40 characters!"),
     });
@@ -106,7 +128,7 @@ export default {
   },
   mounted() {
     if (this.loggedIn) {
-      this.$router.push("/profile");
+      this.$router.push("/admin");
     }
   },
   methods: {
@@ -116,15 +138,20 @@ export default {
       this.loading = true;
       this.$store.dispatch("auth/register", user).then(
         (data) => {
+          console.log(data, 'sdsdsmessage');
+          
           this.message = data.message;
           this.successful = true;
           this.loading = false;
+     
+          
         },
         (error) => {
+          console.log('lalalalalala', error.email[0]);
           this.message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
+            (error.email[0] &&
+              error.email[0] &&
+              error.email[0]) ||
             error.message ||
             error.toString();
           this.successful = false;
@@ -135,11 +162,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.card_login {
-    padding: 20px;
-}
-
-</style>
-

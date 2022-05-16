@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -33,7 +34,15 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: () => import('../views/ProfileView.vue')
-    }
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      // lazy-loaded
+      component: () => import('../components/pages/admin/Home.vue'),
+ 
+    },
+
   ]
 });
 router.beforeEach((to, from, next) => {
