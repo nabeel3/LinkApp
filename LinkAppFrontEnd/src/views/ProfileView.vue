@@ -5,6 +5,8 @@ import Profile from '@/components/user/Profile.vue'
 
 <template>
   <main>
+
     <Profile />
+
   </main>
 </template>

@@ -1,5 +1,4 @@
 <script setup>
-
 import Register from '@/components/user/Register.vue'
 </script>
 
