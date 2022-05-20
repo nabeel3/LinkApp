@@ -22,6 +22,12 @@ export default {
       name: '/add',
       component: () => import('@/components/Pages/admin/Post/Create.vue')
     },
+    {
+      path: "/post/:id",
+      name: "post-details",
+      component: () => import("@/components/Pages/admin/Post/Post.vue")
+    },
+  
 
   
 

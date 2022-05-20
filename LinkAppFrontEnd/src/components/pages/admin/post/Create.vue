@@ -13,13 +13,13 @@
         />
       </div>
       <div class="form-group">
-        <label for="description">Description</label>
+        <label for="content">content</label>
         <input
           class="form-control"
-          id="description"
+          id="content"
           required
           v-model="tutorial.content"
-          name="description"
+          name="content"
         />
       </div>
       <button @click="saveTutorial" class="btn btn-success">Submit</button>
@@ -49,7 +49,7 @@ export default {
     saveTutorial() {
       var data = {
         title: this.tutorial.title,
-        description: this.tutorial.description
+        content: this.tutorial.content
       };
       TutorialDataService.create(data)
         .then(response => {

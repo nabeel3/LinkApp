@@ -7,14 +7,13 @@ class TutorialDataService {
     return http.get(`/post/${id}`);
   }
   create(data) {
-
     return http.post("/posts", data);
   }
   update(id, data) {
-    return http.put(`/tutorials/${id}`, data);
+    return http.put(`/post/${id}`, data);
   }
   delete(id) {
-    return http.delete(`/tutorials/${id}`);
+    return http.delete(`/post/${id}`);
   }
   deleteAll() {
     return http.delete(`/tutorials`);
