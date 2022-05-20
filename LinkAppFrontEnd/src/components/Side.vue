@@ -24,6 +24,46 @@
             </div>
 
 </template>
+<script>
+import TagDataService from "../services/TagDataService";
+export default {
+  name: "tag-list",
+  data() {
+    return {
+      tags: [],
+
+    };
+  },
+  methods: {
+    retrieveTutorials() {
+      TagDataService.getAll()
+        .then(response => {
+            console.log(response, 'responseresponse')
+          this.tags = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    refreshList() {
+      this.retrieveTutorials();
+      this.currentTutorial = null;
+      this.currentIndex = -1;
+    },
+    setActiveTutorial(tutorial, index) {
+      this.currentTutorial = tutorial;
+      this.currentIndex = tutorial ? index : -1;
+    },
+
+    
+
+  },
+  mounted() {
+    this.retrieveTutorials();
+  }
+};
+</script>
 
 
 <style scoped>

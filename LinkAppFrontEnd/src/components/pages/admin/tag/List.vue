@@ -35,7 +35,7 @@
 
 </template>
 <script>
-import TagDataService from "../../../../services/TutorialDataService";
+import TagDataService from "../../../../services/TagDataService";
 export default {
   name: "tag-list",
   data() {

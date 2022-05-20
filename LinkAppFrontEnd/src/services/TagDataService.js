@@ -1,6 +1,7 @@
 import http from "../services/http-common";
 class TaglDataService {
   getAll() {
+      console.log('tagss')
     return http.get("/tags");
   }
   get(id) {

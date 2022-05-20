@@ -17,19 +17,18 @@ import SideBar from './Side.vue'
     <div class="container">
        
         <div class="row mt-4">
-            <div class="item features-image сol-8 col-md-8 col-lg-8 ">
+            <div  v-for="(post, index) in posts" class="item features-image сol-8 col-md-8 col-lg-8 ">
                 <div class="bg-white p-2">
                     <div class="d-flex flex-row user-info"><img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
                         <div class="d-flex flex-column justify-content-start ml-2"
                         >
-                        <h6 class="item-title mbr-fonts-style display-6"><strong>Design</strong></h6>
+                        <h6 class="item-title mbr-fonts-style display-6"><strong>{{post.title}}</strong></h6>
 
                         <h6 class="item-subtitle mbr-fonts-style mt-1 display-7">Shared publicly - Jan 2020</h6>
                         
                         </div>
                     </div>
-                    <p class="mbr-text mbr-fonts-style mt-3 display-7">You don't have to code to create your own
-                            site. Select one of available themes in the Mobirise Site Maker.</p>
+                    <p class="mbr-text mbr-fonts-style mt-3 display-7">{{post.content}}</p>
                 </div>
                 <div class="item-wrapper">
                     <div class="item-img">
@@ -43,7 +42,9 @@ import SideBar from './Side.vue'
                         </div>
 
                         <div class="bg-light p-2">
-                            <div class="d-flex flex-row align-items-start user-info"><img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40"><textarea class="form-control ml-1 shadow-none textarea"></textarea></div>
+                            <div class="d-flex flex-row align-items-start user-info"><img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40"
+                            ><textarea v-model="coment.title" class="form-control ml-1 shadow-none textarea"></textarea>
+                            </div>
                                 <div class="mt-2 post-comment-button">
                                     <button class="btn btn-success display-4" type="button">Post comment</button>
                                     <button class="btn btn-success-outline display-4 " type="button">Cancel</button>
@@ -62,6 +63,60 @@ import SideBar from './Side.vue'
 
 </section>
 </template>
+<script >
+import TutorialDataService from "../services/TutorialDataService";
+import ComentSevice from "../services/ComentService";
+export default {
+  name: "tutorials-list",
+  data() {
+    return {
+      posts: [],
+      currentTutorial: null,
+      currentIndex: -1,
+      title: "",
+       coment: {
+        id: null,
+        title: "",
+     
+      },
+    };
+  },
+  methods: {
+    retrieveTutorials() {
+      TutorialDataService.getAll()
+        .then(response => {
+            console.log(response, "post")
+          this.posts = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+   
+
+  },
+      saveComentl() {
+      var data = {
+        title: this.coment.title,
+
+      };
+      ComentSevice.create(data)
+        .then(response => {
+          this.tag.id = response.data.id;
+          console.log(response.data);
+          this.submitted = true;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+  mounted() {
+    this.retrieveTutorials();
+  }
+};
+</script>
+
 
 
 <style scoped>
