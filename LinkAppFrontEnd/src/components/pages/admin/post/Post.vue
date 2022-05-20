@@ -1,6 +1,9 @@
 <template>
-  <div v-if="currentTutorial" class="edit-form">
-    <h4>Tutorial</h4>
+<div class="row">
+    <div class="container">
+        <div class="col-md-8 pt-5">
+              <div v-if="currentTutorial" class="edit-form">
+    <h4>Edit Post</h4>
     <form>
       <div class="form-group">
         <label for="title">Title</label>
@@ -10,7 +13,7 @@
       </div>
       <div class="form-group">
         <label for="content">content</label>
-        <input type="text" class="form-control" id="content"
+        <textarea type="text" class="form-control" id="content"
           v-model="currentTutorial.content"
         />
       </div>
@@ -33,6 +36,11 @@
     <br />
     <p>Please click on a Tutorial...</p>
   </div>
+
+        </div>
+    </div>
+</div>
+
 </template>
 <script>
 
@@ -101,8 +109,5 @@ export default {
 };
 </script>
 <style>
-.edit-form {
-  max-width: 300px;
-  margin: auto;
-}
+
 </style>

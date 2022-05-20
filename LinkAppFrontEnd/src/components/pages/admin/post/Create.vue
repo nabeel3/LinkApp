@@ -1,5 +1,8 @@
 <template>
-  <div class="submit-form">
+<div class="row">
+    <div class="container">
+        <div class="col-md-8">
+              <div class="submit-form pt-5 mt-2">
     <div v-if="!submitted">
       <div class="form-group">
         <label for="title">Title</label>
@@ -13,8 +16,8 @@
         />
       </div>
       <div class="form-group">
-        <label for="content">content</label>
-        <input
+        <label for="content">Content</label>
+        <textarea
           class="form-control"
           id="content"
           required
@@ -29,6 +32,10 @@
       <button class="btn btn-success" @click="newTutorial">Add</button>
     </div>
   </div>
+          </div>
+    </div>
+</div>
+
 </template>
 <script>
 import TutorialDataService from "../../../../services/TutorialDataService";
@@ -70,8 +77,8 @@ export default {
 };
 </script>
 <style>
-.submit-form {
+/* .submit-form {
   max-width: 300px;
   margin: auto;
-}
+} */
 </style>
