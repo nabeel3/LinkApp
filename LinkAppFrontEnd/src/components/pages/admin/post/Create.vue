@@ -15,6 +15,7 @@
           name="title"
         />
       </div>
+      
       <div class="form-group">
         <label for="content">Content</label>
         <textarea
@@ -25,6 +26,14 @@
           name="content"
         />
       </div>
+        <Multiselect
+            v-model="options"
+            :placeholder="content"
+            label="name"
+            trackBy="name"
+            :options="options"
+            :searchable="true"
+            />
       <button @click="saveTutorial" class="btn btn-success">Submit</button>
     </div>
     <div v-else>
@@ -39,7 +48,12 @@
 </template>
 <script>
 import TutorialDataService from "../../../../services/TutorialDataService";
+import Multiselect from '@vueform/multiselect'
 export default {
+    components: {
+      Multiselect,
+    },
+
   name: "add-tutorial",
   data() {
     return {
@@ -47,8 +61,16 @@ export default {
         id: null,
         title: "",
         content: "",
-        published: false
+        published: false,
+     
       },
+        value: null,
+         options: [
+          { value: 'captainamerica', name: 'Captain America', icon: 'https://cdn2.iconfinder.com/data/icons/avengers-filled/48/03_-_Captain_America_-_infinity_war_-_end_game_-_marvel_-_avengers_-_super_hero-512.png' },
+          { value: 'spiderman', name: 'Spiderman', icon: 'https://cdn2.iconfinder.com/data/icons/avengers-filled/48/12_-_Spiderman_-_infinity_war_-_end_game_-_marvel_-_avengers_-_super_hero-512.png' },
+          { value: 'ironman', name: 'Iron Man', icon: 'https://cdn2.iconfinder.com/data/icons/avengers-filled/48/02_-_IRONMAN_-_infinity_war_-_end_game_-_marvel_-_avengers_-_super_hero-512.png' },
+        ],
+      
       submitted: false
     };
   },
@@ -76,9 +98,6 @@ export default {
   }
 };
 </script>
-<style>
-/* .submit-form {
-  max-width: 300px;
-  margin: auto;
-} */
-</style>
+
+<style src="@vueform/multiselect/themes/default.css"></style>
+
