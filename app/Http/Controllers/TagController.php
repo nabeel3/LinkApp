@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    protected $user;
+ 
+    public function __construct()
+    {
+        $this->user = JWTAuth::parseToken()->authenticate();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +21,7 @@ class TagController extends Controller
     public function index()
     {
         //
+        return Tag::get();
     }
 
     /**
@@ -36,6 +43,30 @@ class TagController extends Controller
     public function store(Request $request)
     {
         //
+
+        $data = $request->only('name');
+        $validator = Validator::make($data, [
+            'name' => 'required|string',
+
+        ]);
+
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 200);
+        }
+
+        //Request is valid, create new product
+        $tag = Tag::create([
+            'name' => $request->title,
+  
+        ]);
+
+        //Product created, return success response
+        return response()->json([
+            'success' => true,
+            'message' => 'Tag created successfully',
+            'data' => $tag
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -44,9 +75,20 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show($id)
     {
         //
+
+        $tag = Tag::find($id);
+    
+        if (!$tag) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sorry, product not found.'
+            ], 400);
+        }
+    
+        return $tag;
     }
 
     /**
@@ -70,6 +112,31 @@ class TagController extends Controller
     public function update(Request $request, Tag $tag)
     {
         //
+
+        $data = $request->only('name');
+        $validator = Validator::make($data, [
+            'name' => 'required|string',
+
+        ]);
+
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->messages()], 200);
+        }
+
+        //Request is valid, create new product
+        $tag = Tag::where('id', $request->id)
+            ->update([
+              'name' =>$request->name,
+            ]);
+
+
+        //Product created, return success response
+        return response()->json([
+            'success' => true,
+            'message' => 'Post created successfully',
+            'data' => $tag
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -78,8 +145,14 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function destroy($id)
     {
         //
+        $res = Tag::where('id',$id)->delete();
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Tag deleted successfully'
+        ], Response::HTTP_OK);
     }
 }

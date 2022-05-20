@@ -28,16 +28,17 @@
         </RouterLink>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          Products
-        </a>
+         <RouterLink to='/tags' class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          
+          Tag
+        </RouterLink>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-          Customers
-        </a>
+        <RouterLink to='/videos' class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          Video
+        </RouterLink>
       </li>
     </ul>
     <hr>

@@ -27,12 +27,40 @@ export default {
       name: "post-details",
       component: () => import("@/components/Pages/admin/Post/Post.vue")
     },
-  
 
-  
+    {
+      path: '/video',
+      name: '/video',
+      component: () => import('@/components/Pages/admin/Video/list.vue')
+    },
 
-    
-  
+    {
+      path: '/ad/video',
+      name: '/add/video',
+      component: () => import('@/components/Pages/admin/Video/Create.vue')
+    },
+    {
+      path: "/video/:id",
+      name: "video-details",
+      component: () => import("@/components/Pages/admin/Video/Post.vue")
+    },
+
+  {
+    path: '/tags',
+    name: '/tags',
+    component: () => import('@/components/Pages/admin/Tag/list.vue')
+  },
+
+  {
+    path: '/add/tag',
+    name: '/add/tag',
+    component: () => import('@/components/Pages/admin/Tag/Create.vue')
+  },
+  {
+    path: "/tag/:id",
+    name: "tag-details",
+    component: () => import("@/components/Pages/admin/Tag/Post.vue")
+  },
 
   ]
 }
