@@ -26,14 +26,18 @@
           name="content"
         />
       </div>
-        <Multiselect
-            v-model="options"
-            :placeholder="content"
-            label="name"
-            trackBy="name"
-            :options="options"
-            :searchable="true"
-            />
+       <Multiselect
+        v-model="tutorial.tags"
+        mode="tags"
+        :close-on-select="false"
+        :searchable="true"
+        :create-option="true"
+        :options="[
+            { value: '1', label: 'Batman' },
+            { value: '2', label: 'Robin' },
+            { value: '3', label: 'Joker' },
+        ]"
+        />
       <button @click="saveTutorial" class="btn btn-success">Submit</button>
     </div>
     <div v-else>
@@ -61,6 +65,7 @@ export default {
         id: null,
         title: "",
         content: "",
+        tags:[],
         published: false,
      
       },
@@ -78,7 +83,8 @@ export default {
     saveTutorial() {
       var data = {
         title: this.tutorial.title,
-        content: this.tutorial.content
+        content: this.tutorial.content,
+        tags: this.tutorial.tags
       };
       TutorialDataService.create(data)
         .then(response => {

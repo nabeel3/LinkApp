@@ -43,7 +43,9 @@ class ApiController extends Controller
  
     public function authenticate(Request $request)
     {
+
         $credentials = $request->only('email', 'password');
+        
 
         //valid credential
         $validator = Validator::make($credentials, [
@@ -72,11 +74,14 @@ class ApiController extends Controller
                 	'message' => 'Could not create token.',
                 ], 500);
         }
+        $currentUser = JWTAuth::user();
+        // $user = JWTAuth::toUser($token);
  	
  		//Token created, return with success response and jwt token
         return response()->json([
             'success' => true,
             'token' => $token,
+            'user'=> $currentUser
         ]);
     }
  
