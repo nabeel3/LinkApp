@@ -1,7 +1,7 @@
-import http from "../services/http-common";
-class ComentService {
+import http from "./http-common";
+class CommentService {
 
-  createComent(data) {
+  createcomment(data) {
     return http.post("/comment/store", data);
   }
   createReply(data) {
@@ -10,4 +10,4 @@ class ComentService {
 
 
 }
-export default new ComentService();
+export default new CommentService();
