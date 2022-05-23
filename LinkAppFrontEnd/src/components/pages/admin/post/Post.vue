@@ -95,7 +95,8 @@ export default {
       TutorialDataService.delete(this.currentTutorial.id)
         .then(response => {
           console.log(response.data);
-          this.$router.push({ name: "posts" });
+          this.retrieveTutorials();
+          // this.$router.push({ name: "posts" });
         })
         .catch(e => {
           console.log(e);

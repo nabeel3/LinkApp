@@ -8,8 +8,10 @@ export default {
     {
       path: '/admin',
       name: '/admin',
-      component: () => import('@/components/Pages/admin/Home.vue')
+      component: () => import('@/components/Pages/admin/Post/list.vue')
     },
+    
+    
 
     {
       path: '/posts',
@@ -29,13 +31,13 @@ export default {
     },
 
     {
-      path: '/video',
-      name: '/video',
+      path: '/videos',
+      name: '/videos',
       component: () => import('@/components/Pages/admin/Video/list.vue')
     },
 
     {
-      path: '/ad/video',
+      path: '/add/video',
       name: '/add/video',
       component: () => import('@/components/Pages/admin/Video/Create.vue')
     },
@@ -48,18 +50,18 @@ export default {
   {
     path: '/tags',
     name: '/tags',
-    component: () => import('@/components/Pages/admin/Tag/list.vue')
+    component: () => import('@/components/Pages/admin/tags/List.vue')
   },
 
   {
     path: '/add/tag',
     name: '/add/tag',
-    component: () => import('@/components/Pages/admin/Tag/Create.vue')
+    component: () => import('@/components/Pages/admin/tags/Create.vue')
   },
   {
     path: "/tag/:id",
     name: "tag-details",
-    component: () => import("@/components/Pages/admin/Tag/Post.vue")
+    component: () => import("@/components/Pages/admin/tags/Tag.vue")
   },
 
   ]

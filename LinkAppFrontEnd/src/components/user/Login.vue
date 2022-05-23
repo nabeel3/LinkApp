@@ -94,7 +94,7 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push("/profile");
+      this.$router.push("/admin");
     }
   },
   methods: {
@@ -102,7 +102,7 @@ export default {
       this.loading = true;
       this.$store.dispatch("auth/login", user).then(
         (data) => {
-          this.$router.push("/profile");
+          this.$router.push("/admin");
         },
         (error) => {
           this.loading = false;

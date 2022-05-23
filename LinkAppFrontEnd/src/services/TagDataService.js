@@ -10,8 +10,9 @@ class TaglDataService {
   create(data) {
     return http.post("/tags", data);
   }
-  update(id, data) {
-    return http.put(`/tag/${id}`, data);
+  update(data) {
+
+    return http.post(`/tag/${data.id}`, data);
   }
   delete(id) {
     return http.delete(`/tag/${id}`);

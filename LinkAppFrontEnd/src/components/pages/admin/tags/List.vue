@@ -3,7 +3,7 @@
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2>Tags <b></b></h2></div>
+                    <div class="col-sm-8"><h2>Tags <b>Details</b></h2></div>
                     <div class="col-sm-4">
                         <RouterLink to='/add/tag' type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</RouterLink>
                     </div>
@@ -18,13 +18,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(tutorial, index) in tutorials">
-                        <td> {{ tutorial.title }}</td>
-
+                    <tr v-for="(tag, index) in tags">
+                        <td> {{ tag.name }}</td>
                         <td>
-						<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons"></i></a>
-                            <RouterLink class="edit" :to="'/tag/' + tutorial.id" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></RouterLink>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>
+                            <RouterLink class="edit" :to="'/tag/' + tag.id" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i><span class="glyphicon glyphicon-edit"></span> </RouterLink>
+                            <a  @click="deleteTag(tag.id)" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>
                         </td>
                     </tr>
                   
@@ -32,31 +30,97 @@
             </table>
         </div>
     </div>    
-
+  <!-- <div class="list row">
+    <div class="col-md-8">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search by title"
+          v-model="title"/>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button"
+            @click="searchTitle"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4>Tutorials List</h4>
+      <ul class="list-group">
+        <li class="list-group-item"
+          :class="{ active: index == currentIndex }"
+          v-for="(tutorial, index) in tutorials"
+          :key="index"
+          @click="setActiveTutorial(tutorial, index)"
+        >
+          {{ tutorial.title }}
+        </li>
+      </ul>
+      <button class="m-3 btn btn-sm btn-danger" @click="removeAllTutorials">
+        Remove All
+      </button>
+    </div>
+    <div class="col-md-6">
+      <div v-if="currentTutorial">
+        <h4>Tutorial</h4>
+        <div>
+          <label><strong>Title:</strong></label> {{ currentTutorial.title }}
+        </div>
+        <div>
+          <label><strong>Description:</strong></label> {{ currentTutorial.description }}
+        </div>
+        <div>
+          <label><strong>Status:</strong></label> {{ currentTutorial.published ? "Published" : "Pending" }}
+        </div>
+        <router-link :to="'/tutorials/' + currentTutorial.id" class="badge badge-warning">Edit</router-link>
+      </div>
+      <div v-else>
+        <br />
+        <p>Please click on a Tutorial...</p>
+      </div>
+    </div>
+  </div> -->
 </template>
 <script>
 import TagDataService from "../../../../services/TagDataService";
 export default {
-  name: "tag-list",
+  name: "tags-list",
   data() {
     return {
-      tutorials: [],
+      tags: [],
       currentTutorial: null,
       currentIndex: -1,
       title: ""
     };
   },
   methods: {
-    retrieveTutorials() {
+    retrieveTags() {
       TagDataService.getAll()
         .then(response => {
-          this.tutorials = response.data;
+          this.tags = response.data;
           console.log(response.data);
         })
         .catch(e => {
           console.log(e);
         });
     },
+
+      deleteTag(id) {
+    if(confirm("Do you really want to delete?")){
+      TagDataService.delete(id)
+        .then(response => {
+          console.log(response.data);
+            this.retrieveTags();
+            //this.$router.push("tags");
+        })
+        .catch(e => {
+          console.log(e);
+        });
+      }
+    },
+
+
+
     refreshList() {
       this.retrieveTutorials();
       this.currentTutorial = null;
@@ -90,10 +154,12 @@ export default {
     }
   },
   mounted() {
-    this.retrieveTutorials();
+    this.retrieveTags();
   }
 };
 </script>
+
+
 <style>
 	.table-wrapper {
 		width: 700px;

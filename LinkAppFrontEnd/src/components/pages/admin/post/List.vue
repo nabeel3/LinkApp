@@ -26,7 +26,7 @@
                         <td>
 							              <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons"></i></a>
                             <RouterLink class="edit" :to="'/post/' + tutorial.id" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></RouterLink>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>
+                            <a   @click="deleteTutorial(tutorial.id)" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons"></i></a>
                         </td>
                     </tr>
                   
@@ -107,6 +107,19 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+     deleteTutorial(id) {
+     if(confirm("Do you really want to delete?")){
+      TutorialDataService.delete(id)
+        .then(response => {
+          console.log(response.data);
+          this.retrieveTutorials();
+          // this.$router.push({ name: "posts" });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+     }
     },
     refreshList() {
       this.retrieveTutorials();

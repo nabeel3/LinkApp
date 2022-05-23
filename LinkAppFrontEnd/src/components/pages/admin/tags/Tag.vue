@@ -2,31 +2,25 @@
 <div class="row">
     <div class="container">
         <div class="col-md-8 pt-5">
-              <div v-if="currentTutorial" class="edit-form">
-    <h4>Edit Post</h4>
+              <div v-if="currentTag" class="edit-form">
+    <h4>Edit Tag</h4>
     <form>
       <div class="form-group">
         <label for="title">Title</label>
         <input type="text" class="form-control" id="title"
-          v-model="currentTutorial.title"
-        />
-      </div>
-      <div class="form-group">
-        <label for="content">content</label>
-        <textarea type="text" class="form-control" id="content"
-          v-model="currentTutorial.content"
+          v-model="currentTag.name"
         />
       </div>
 
     </form>
 
     <button class="btn btn-danger mr-2"
-      @click="deleteTutorial"
+      @click="deleteTag"
     >
       Delete
     </button>
     <button type="submit" class="btn btn-success"
-      @click="updateTutorial"
+      @click="updateTag"
     >
       Update
     </button>
@@ -44,20 +38,19 @@
 </template>
 <script>
 
-import TagDataService from "../../../../services/TutorialDataService";
-export default {
-  name: "tag",
+import TagDataService from "../../../../services/TagDataService";export default {
+  name: "tags",
   data() {
     return {
-      currentTutorial: null,
+      currentTag: null,
       message: ''
     };
   },
   methods: {
-    getTutorial(id) {
+    getTags(id) {
       TagDataService.get(id)
         .then(response => {
-          this.currentTutorial = response.data;
+          this.currentTag = response.data;
           console.log(response.data);
         })
         .catch(e => {
@@ -66,23 +59,23 @@ export default {
     },
     updatePublished(status) {
       var data = {
-        id: this.currentTutorial.id,
-        title: this.currentTutorial.title,
-        content: this.currentTutorial.content,
+        id: this.currentTag.id,
+        title: this.currentTag.title,
         published: status
       };
-      TagDataService.update(this.currentTutorial.id, data)
+      TagDataService.update(this.currentTag.id, data)
         .then(response => {
           console.log(response.data);
-          this.currentTutorial.published = status;
+          this.currentTag.published = status;
           this.message = 'The status was updated successfully!';
         })
         .catch(e => {
           console.log(e);
         });
     },
-    updateTutorial() {
-      TagDataService.update(this.currentTutorial.id, this.currentTutorial)
+    updateTag() {
+      TagDataService.update(this.currentTag)
+
         .then(response => {
           console.log(response.data);
           this.message = 'The tutorial was updated successfully!';
@@ -91,11 +84,11 @@ export default {
           console.log(e);
         });
     },
-    deleteTutorial() {
-      TagDataService.delete(this.currentTutorial.id)
+    deleteTag() {
+      TagDataService.delete(this.currentTag.id)
         .then(response => {
           console.log(response.data);
-          this.$router.push({ name: "tags" });
+          this.$router.push({ name: "posts" });
         })
         .catch(e => {
           console.log(e);
@@ -104,7 +97,7 @@ export default {
   },
   mounted() {
     this.message = '';
-    this.getTutorial(this.$route.params.id);
+    this.getTags(this.$route.params.id);
   }
 };
 </script>

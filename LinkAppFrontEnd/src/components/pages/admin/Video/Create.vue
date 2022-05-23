@@ -2,6 +2,7 @@
 <div class="row">
     <div class="container">
         <div class="col-md-8">
+          Create Video
               <div class="submit-form pt-5 mt-2">
     <div v-if="!submitted">
       <div class="form-group">
@@ -11,7 +12,7 @@
           class="form-control"
           id="title"
           required
-          v-model="tutorial.title"
+          v-model="video.title"
           name="title"
         />
       </div>
@@ -22,12 +23,16 @@
           class="form-control"
           id="content"
           required
-          v-model="tutorial.content"
+          v-model="video.content"
           name="content"
         />
       </div>
+          <upload-media 
+          server="/api/upload"
+          error="@error('media'){{$message}}@enderror">
+          </upload-media>
        <Multiselect
-        v-model="tutorial.tags"
+        v-model="video.tags"
         mode="tags"
         :close-on-select="false"
         :searchable="true"
@@ -51,7 +56,7 @@
 
 </template>
 <script>
-import VideoDataService from "../../../../services/VideoDataService";
+import VideoDataService from "../../../../services/VideoService";
 import Multiselect from '@vueform/multiselect'
 export default {
     components: {
