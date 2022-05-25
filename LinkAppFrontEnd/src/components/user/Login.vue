@@ -4,9 +4,13 @@
  
     <div class="cotainer">
         <div class="mbr-section-head">
-            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
-                <strong>Get in Touch</strong>
+            <h3 class="pt-5 mbr-section-title mbr-fonts-style align-center mb-0 display-5">
+                <strong>Welcome to Larasoft - LinkedApp</strong>
             </h3>
+            <div class="align-center mt-5">
+                <img src="https://larasoft.io/assets/img/logo-colour.webp" class="w-25"  style="display:inline" />
+
+             </div>
         </div>
         <div class="row justify-content-center mt-5 pt-4 pb-5 pt-5 card_row">
             <div class="col-lg-4 mx-auto mbr-form bg-light card_login mb-5" data-form-type="formoid">
@@ -33,8 +37,9 @@
                             <Field type="password" name="password" placeholder="Password" data-form-field="Password" class="form-control" value="" id="name-form7-n"/>
                             <ErrorMessage name="password" class="error-feedback" />
                         </div>
+                            <RouterLink to="/register" class="item-subtitle mbr-fonts-style mt-1 align-right">Don't you have a Account</RouterLink>
 
-                        <a class="item-subtitle mbr-fonts-style mt-1 align-right">Forgot Password</a>
+                        <!-- <a class="item-subtitle mbr-fonts-style mt-1 align-right">Forgot Password</a> -->
                     
                         <!-- <div class="col-auto mbr-section-btn align-center">
                             <button  class="btn btn-primary display-4">Submit</button>

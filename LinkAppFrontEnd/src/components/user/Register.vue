@@ -7,16 +7,20 @@
  
     <div class="cotainer">
         <div class="mbr-section-head">
-            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
-                <strong>Get in Touch</strong>
+            <h3 class="mbr-section-title pt-5 mbr-fonts-style align-center mb-0 display-5">
+                  <strong>Welcome to Larasoft - LinkedApp</strong>
+                 <div class="align-center mt-5">
+                <img src="https://larasoft.io/assets/img/logo-colour.webp" class="w-25"  style="display:inline" />
+
+             </div>
             </h3>
         </div>
         <div class="row justify-content-center mt-5 pt-4 pb-5 pt-5 card_row">
             <div class="col-lg-4 mx-auto mbr-form bg-light card_login mb-5" data-form-type="formoid">
                 <div v-if="!successful">
                 <Form @submit="handleRegister" :validation-schema="schema"  class="mbr-form form-with-styler mx-auto " data-form-title="Form Name">
-                    <p class="mbr-text mbr-fonts-style align-center mb-4 display-7">
-                       Login
+                    <p class="mbr-text mbr-fonts-style pt-3 align-center mb-4 display-7">
+                       Register
                     </p>
                     <div class="row">
                         <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Thanks for filling out the form!</div>
@@ -27,7 +31,7 @@
                     <div class="dragArea row">
 
                        <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="email">
-                            <Field type="email" name="username" placeholder="username" data-form-field="username" class="form-control" value="" id="email-form7-n"/>
+                            <Field type="email" name="username" placeholder="User name" data-form-field="username" class="form-control" value="" id="email-form7-n"/>
                                  <ErrorMessage name="username" class="error-feedback" />
                         </div>
 
@@ -42,7 +46,9 @@
                             <ErrorMessage name="password" class="error-feedback" />
                         </div>
 
-                        <a class="item-subtitle mbr-fonts-style mt-1 align-right">Forgot Password</a>
+                        <RouterLink to="/login" class="pb-2 item-subtitle mbr-fonts-style mt-1 align-right">Back to Login</RouterLink>
+
+                        <!-- <a class="item-subtitle mbr-fonts-style mt-1 align-right">Forgot Password</a> -->
                     
                         <!-- <div class="col-auto mbr-section-btn align-center">
                             <button  class="btn btn-primary display-4">Submit</button>
