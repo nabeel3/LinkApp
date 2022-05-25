@@ -4,7 +4,7 @@ import HomeView from '../views/HomeView.vue'
 export default {
     path: '/',
     component: FrontendPanel,
-    redirect: '/home',
+    redirect: '/login',
 
     children: [
     {

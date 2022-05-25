@@ -59,7 +59,7 @@
                                     v-show="loading"
                                     class="spinner-border spinner-border-sm"
                                     ></span>
-                                <span>Login</span>
+                                <span>Register</span>
                             </button>
                             </div>
                     </div>
@@ -144,8 +144,12 @@ export default {
       this.loading = true;
       this.$store.dispatch("auth/register", user).then(
         (data) => {
-          console.log(data, 'sdsdsmessage');
-          
+           if (data.success == true) {
+            localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('AccessToken', JSON.stringify(data.token));
+            this.$router.push("/admin");
+
+          }
           this.message = data.message;
           this.successful = true;
           this.loading = false;

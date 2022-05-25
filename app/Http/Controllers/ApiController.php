@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
+    public $token = true;
     public function register(Request $request)
     {
     	//Validate data
@@ -33,11 +34,18 @@ class ApiController extends Controller
         	'password' => bcrypt($request->password)
         ]);
 
+        if ($this->token) {
+            return $this->authenticate($request);
+        }
+
+
+
         //User created, return success response
         return response()->json([
             'success' => true,
             'message' => 'User created successfully',
-            'data' => $user
+            'data' => $user,
+            'token' => $token,
         ], Response::HTTP_OK);
     }
  
