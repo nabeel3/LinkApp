@@ -10,10 +10,10 @@ import PostItem from './Post.vue'
       <div class="align-center container">
           <div class="row justify-content-center">
               <div class="col-12 col-lg-8">
-                  <h1 class="mbr-section-title mbr-fonts-style mb-3 display-1"><strong>Full Screen Intro</strong></h1>
+                  <h1 class="mbr-section-title mbr-fonts-style mb-3 display-1"><strong>LinkedApp</strong></h1>
                   
-                  <p class="mbr-text mbr-fonts-style display-7">This is a default project. Click any text to edit or style it. Select text to insert a <a href="http://mobirise.com">link</a>. Click the blue "Gear" icon at the top right corner to hide/show buttons, text, title, and change the block background. Click the red "+" button at the bottom right corner to add a new block. Use the top left menu to create new pages, sites, and add new themes and extensions.</p>
-                  <div class="mbr-section-btn mt-3"><a class="btn btn-success display-4" href="https://mobirise.com">Button 1</a> <a class="btn btn-success-outline display-4" href="https://mobirise.com">Button 2 &gt;</a></div>
+                  <p class="mbr-text mbr-fonts-style display-7">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                  <!-- <div class="mbr-section-btn mt-3"><a class="btn btn-success display-4" href="https://mobirise.com">Button 1</a> <a class="btn btn-success-outline display-4" href="https://mobirise.com">Button 2 &gt;</a></div> -->
               </div>
           </div>
       </div>

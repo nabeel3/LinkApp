@@ -5,10 +5,11 @@
             <div class="navbar-brand">
                 <span class="navbar-logo">
                     <a href="https://mobiri.se">
-                        <img src="https://r.mobirisesite.com/206376/assets/images/logo.png?v=1NP2wk" alt="Mobirise Website Builder" style="height: 3.8rem;">
+                   
+                        <img src="https://larasoft.io/assets/img/logo-colour.webp" alt="Mobirise Website Builder" style="height: 3.8rem;">
                     </a>
                 </span>
-                <span class="navbar-caption-wrap"><a class="navbar-caption text-black display-7" href="https://mobiri.se">Brand Name</a></span>
+
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <div class="hamburger">
@@ -25,11 +26,11 @@
                              <RouterLink lass="nav-link link text-black display-1" to="/">Home</RouterLink>
                       </li>
                 </ul>
-                 <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
+                 <!-- <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
                     <li class="nav-item">
                              <RouterLink lass="nav-link link text-black display-1" to="/about">About</RouterLink>
                       </li>
-                </ul>
+                </ul> -->
 
                  
 
@@ -43,7 +44,7 @@
 
                 <ul v-if="currentUser" class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
                     <li class="nav-item">
-                             <RouterLink lass="nav-link link text-black display-1" to="/admin">adminnn</RouterLink>
+                             <RouterLink lass="nav-link link text-black display-1" to="/admin">Dashboard</RouterLink>
                       </li>
                 </ul>
 

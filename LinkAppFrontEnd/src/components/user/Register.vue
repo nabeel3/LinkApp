@@ -147,7 +147,7 @@ export default {
            if (data.success == true) {
             localStorage.setItem('user', JSON.stringify(data.user));
             localStorage.setItem('AccessToken', JSON.stringify(data.token));
-            this.$router.push("/admin");
+            this.$router.go("/admin");
 
           }
           this.message = data.message;
