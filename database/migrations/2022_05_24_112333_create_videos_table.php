@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned();
-            $table->integer('parent_id')->nullable();
-            $table->text('comment');
-            $table->integer('commentable_id')->unsigned();
-            $table->string('commentable_type');
+            $table->string('title');
+            $table->unsignedBigInteger('post_id')->references('id')->on('posts')->onDelete('cascade');;
+            $table->unsignedBigInteger('user_id')->references('id')->on('users')->onDelete('cascade');;
+            $table->longText('path')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('videos');
     }
 };

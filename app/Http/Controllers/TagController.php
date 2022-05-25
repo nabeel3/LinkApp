@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use JWTAuth;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+use Illuminate\Support\Facades\Validator;
 
 class TagController extends Controller
 {
-    protected $user;
- 
-    public function __construct()
-    {
-        $this->user = JWTAuth::parseToken()->authenticate();
-    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +20,8 @@ class TagController extends Controller
     public function index()
     {
         //
+        
+
         return Tag::get();
     }
 
@@ -44,9 +45,9 @@ class TagController extends Controller
     {
         //
 
-        $data = $request->only('name');
+        $data = $request->only('title');
         $validator = Validator::make($data, [
-            'name' => 'required|string',
+            'title' => 'required|string',
 
         ]);
 
@@ -109,9 +110,10 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request)
     {
         //
+        // return $request;
 
         $data = $request->only('name');
         $validator = Validator::make($data, [
@@ -148,6 +150,7 @@ class TagController extends Controller
     public function destroy($id)
     {
         //
+
         $res = Tag::where('id',$id)->delete();
         
         return response()->json([

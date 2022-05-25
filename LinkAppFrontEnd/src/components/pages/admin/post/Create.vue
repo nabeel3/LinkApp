@@ -26,30 +26,34 @@
           name="content"
         />
       </div>
-       <!-- <div class="form-group">
-             <input type="file" placeholder="image" class="form-control form-control-alternative" v-on:change="getImageFile">
-        </div> -->
-        <div class="custom-file">
+      
+        <div class="form-group">
                     <!-- MOST IMPORTANT - SEE "ref" AND "@change" PROPERTIES -->
                     <input type="file" multiple required class="custom-file-input" id="customFile" 
                         ref="file" @change="handleFileObject()">
                     <label class="custom-file-label text-left" for="customFile">{{ avatarName }}</label>
-                  </div>
-            <Multiselect
-            v-model="value"
-            mode="tags"
-            label="name"
-            :searchable="true"
-            :create-option="true"
-            :options="tags"
-            />
+         </div>
+              <Multiselect
+              v-model="value"
+              mode="tags"
+              placeholder="Choose your tags"
+              :close-on-select="false"
+              :filter-results="false"
+              :min-chars="1"
+              :resolve-on-load="false"
+              :delay="0"
+              :searchable="true"
+              label="name"
+              track-by="value"
+              :options="options"
+              />
       
-      <button @click="saveTutorial" class="btn btn-success">Submit</button>
+              <button @click="saveTutorial" class="btn btn-success">Submit</button>
     </div>
-    <div v-else>
-      <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newTutorial">Add</button>
-    </div>
+      <div v-else>
+        <h4>You submitted successfully!</h4>
+        <button class="btn btn-success" @click="newTutorial">Add</button>
+      </div>
   </div>
           </div>
     </div>
@@ -59,30 +63,37 @@
 <script>
 import TutorialDataService from "../../../../services/TutorialDataService";
 import TagDataService from "../../../../services/TagDataService";
-import Multiselect from '@vueform/multiselect'
+import Multiselect from '@vueform/multiselect';
+import vue2Dropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
 export default {
     components: {
       Multiselect,
+          vueDropzone: vue2Dropzone
     },
 
   name: "add-tutorial",
   data() {
     return {
-      tags:[],
+      options:[],
+
+          option: {
+            value: "",
+            name: "",
+         
+          },
       tutorial: {
         id: null,
         title: "",
         content: "",
-        avatar: null,
+        avatar: [],
         avatarName: null,
         tags:[],
         published: false,
      
       },
 
-        value: null,
-       
-      
+      value: null,
       submitted: false
     };
   },
@@ -90,19 +101,13 @@ export default {
      retrieveTags() {
       TagDataService.getAll()
         .then(response => {
-          this.tags = response.data;
-          console.log('tagssss', response.data);
-            // let newTags = [];
-            //     if (response.data) {
-            //         response.data.forEach(element => {
-            //             newTags.push(
-            //                 { 
-            //                     "value" : element.id,
-            //                     "label" : element.name, 
-            //                 })
-            //         });
-            //     }
-                         
+          response.data.forEach((item, index) => {
+            this.option.value = item.id;
+            this.option.name = item.name;
+            this.options.push({ ...this.option });
+          });
+          
+          console.log('tagssss', response.data);                         
         })
         .catch(e => {
           console.log(e);
@@ -125,9 +130,10 @@ export default {
       var data = {
         title: this.tutorial.title,
         content: this.tutorial.content,
-        tags: this.tutorial.tags,
         image: this.tutorial.avatar,
+        tags: JSON.stringify(this.options),
       };
+      
       TutorialDataService.create(data)
         .then(response => {
           this.tutorial.id = response.data.id;

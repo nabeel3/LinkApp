@@ -56,6 +56,7 @@
 
 </template>
 <script>
+
 import VideoDataService from "../../../../services/VideoService";
 import Multiselect from '@vueform/multiselect'
 export default {

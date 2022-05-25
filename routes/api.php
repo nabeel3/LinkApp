@@ -4,6 +4,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TagController;
@@ -38,12 +39,12 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('tags', [TagController::class, 'store']);
     Route::get('tags', [TagController::class, 'index']);
     Route::get('tag/{id}', [TagController::class, 'show']);
-    Route::put('tag/{id}', [TagController::class, 'update']);
+    Route::post('tag/{id}', [TagController::class, 'update']);
     Route::delete('tag/{id}', [TagController::class, 'destroy']);
 
 
-    Route::post('/comment/store', 'CommentController@store')->name('comment.add');
-    Route::post('/reply/store', 'CommentController@replyStore')->name('reply.add');
+    Route::post('/comment/store',[CommentController::class, 'store'])->name('comment.add');
+    Route::post('/reply/store', [CommentController::class, 'replyStore'])->name('reply.add');
 
 
 

@@ -40,7 +40,7 @@ class CommentController extends Controller
         //
         $comment = new Comment;
 
-        $comment->comment = $request->comment;
+        $comment->comment = $request->title;
 
         $comment->user()->associate($request->user());
 
@@ -53,9 +53,11 @@ class CommentController extends Controller
 
     public function replyStore(Request $request)
     {
+
+        // return $request->all();
         $reply = new Comment();
 
-        $reply->comment = $request->get('comment');
+        $reply->comment = $request->get('title');
 
         $reply->user()->associate($request->user());
 

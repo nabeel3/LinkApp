@@ -41,11 +41,11 @@ export default {
       name: '/add/video',
       component: () => import('@/components/Pages/admin/Video/Create.vue')
     },
-    {
-      path: "/video/:id",
-      name: "video-details",
-      component: () => import("@/components/Pages/admin/Video/Post.vue")
-    },
+    // {
+    //   path: "/video/:id",
+    //   name: "video-details",
+    //   component: () => import("@/components/Pages/admin/Video/Post.vue")
+    // },
 
   {
     path: '/tags',

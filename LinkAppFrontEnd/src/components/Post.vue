@@ -58,8 +58,11 @@ import SideBar from './Side.vue'
                     <div class="item-wrapper">
                       <div v-if="post.image">
                         <div class="item-img">
+                        <video width="320" height="240" controls>
+                          <source :src="post.image" type="video/mp4">
+                        </video>
                           
-                            <img :src="post.image" alt="Mobirise Website Builder" title="">
+                          
                         </div>
 
                       </div>
@@ -67,7 +70,14 @@ import SideBar from './Side.vue'
                         <div class="item-img">
                             <img src="https://r.mobirisesite.com/206376/assets/images/product2.jpg?v=1NP2wk"  alt="Mobirise Website Builder" title="">
                         </div>
-                         </div>
+                        </div>
+                        <div v-if="post.tags"> 
+                          <div v-for="(tag, index) in post.tags" style="display: inherit;"> 
+                           <button class="btn btn-success display-4">
+                             {{tag.name}}
+                          </button>
+                          </div>
+                        </div>
                         
                         <div class="bg-red">
                             <div class="d-flex flex-row fs-12">

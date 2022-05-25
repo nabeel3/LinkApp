@@ -8,7 +8,9 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
-
+use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 class PostController extends Controller
 {
     protected $user;
@@ -24,7 +26,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::get();
+        $posts = Post::with(["comments.replies.user","comments.user","tags", "user"])->get();
+        return $posts;
     }
 
     /**
@@ -46,33 +49,80 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
-        //return $request->all();
 
-        $data = $request->only('title', 'content');
+
+        $data = $request->only('title', 'content','image');
+
+        // $file = $request->file('image');
+        // $name = '/avatars/' . uniqid() . '.' . $file->extension();
+        // $file->storePubliclyAs('public', $name);
+        // $data['image'] = $name;
+
+        // $file = $request->file('image');
+        // $name = Str::random(10);
+        // $url = Storage::putFileAs('images', $file, $name . '.' . $file->extension());
+
+
+
+
         $validator = Validator::make($data, [
             'title' => 'required|string',
+            // 'image' => ['mimes:mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts|max:100040|required'],
 
         ]);
 
         //Send failed response if request is not valid
         if ($validator->fails()) {
             return response()->json(['error' => $validator->messages()], 200);
+        }else
+         {
+            $file = $request->file('image');
+            $name = '/avatars/' . uniqid() . '.' . $file->extension();
+            $url = $file->storePubliclyAs('public', $name);
+            $data['avatar'] = $name;
+
+
+            // $video= $request->file('image');
+            // $input = time().$video->getClientOriginalExtension();
+            // $path = public_path().'/uploads/';
+            // $destinationPath = 'uploads/videos';
+            // $video->move($destinationPath, $input);
+
+            $post = new Post;
+ 
+            $post->title = $request->title;
+            $post->content = $request->content;
+            $post->image = env('APP_URL') . '/storage/' . $name;
+            $post->save();
+
+            if($request->tags){
+                $tags = json_decode($request->tags);
+                foreach($tags as $tag){
+                    $post->tags()->attach(($tag->value));
+                }
+            }
+
+            
+
+            
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Post created successfully',
+                'data' => $post
+            ], Response::HTTP_OK);
+    
+
+
         }
-
+       
         //Request is valid, create new product
-        $product = Post::create([
-            'title' => $request->title,
-            'content' => $request->content,
-        ]);
-        $product->tag()->sync((array)$request->input('tags'));
-        // dd($product->tag()->sync((array)$request->input('tag')));
+        // $product = Post::create([
+        //     'title' => $request->title,
+        //     'content' => $request->content,
+        //     'image' => env('APP_URL') . '/' . $url,
+        // ]);
 
-        //Product created, return success response
-        return response()->json([
-            'success' => true,
-            'message' => 'Post created successfully',
-            'data' => $product
-        ], Response::HTTP_OK);
     }
 
     /**
