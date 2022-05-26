@@ -64,12 +64,11 @@
 import TutorialDataService from "../../../../services/TutorialDataService";
 import TagDataService from "../../../../services/TagDataService";
 import Multiselect from '@vueform/multiselect';
-import vue2Dropzone from "vue2-dropzone";
+
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 export default {
     components: {
       Multiselect,
-          vueDropzone: vue2Dropzone
     },
 
   name: "add-tutorial",

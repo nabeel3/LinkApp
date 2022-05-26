@@ -18,6 +18,29 @@
         />
       </div>
 
+       <div class="form-group">
+                    <!-- MOST IMPORTANT - SEE "ref" AND "@change" PROPERTIES -->
+                    <input type="file" multiple required class="custom-file-input" id="customFile" 
+                        ref="file" @change="handleFileObject()">
+                    <label class="custom-file-label text-left" for="customFile">{{ avatarName }}</label>
+         </div>
+
+      <Multiselect
+              v-model="value"
+              mode="tags"
+              :select="selects"
+              placeholder="Choose your tags"
+              :close-on-select="false"
+              :filter-results="false"
+              :min-chars="1"
+              :resolve-on-load="false"
+              :delay="0"
+              :searchable="true"
+              label="name"
+              track-by="value"
+              :options="options"
+              />
+
     </form>
 
     <button class="btn btn-danger mr-2"
@@ -45,10 +68,33 @@
 <script>
 
 import TutorialDataService from "../../../../services/TutorialDataService";
+import TagDataService from "../../../../services/TagDataService";
+import Multiselect from '@vueform/multiselect';
 export default {
+   components: {
+      Multiselect,
+    },
+  
   name: "tutorial",
   data() {
     return {
+       options:[],
+       selects:[],
+       select: {
+         value: "",
+         name: "",
+       },
+        option: {
+            value: "",
+            name: "",
+          },
+        tutorial: {
+
+        avatar: [],
+        avatarName: null,
+        published: false,
+     
+      },
       currentTutorial: null,
       message: ''
     };
@@ -58,7 +104,30 @@ export default {
       TutorialDataService.get(id)
         .then(response => {
           this.currentTutorial = response.data;
-          console.log(response.data);
+           response.data.tags.forEach((item, index) => {
+            this.select.value = item.id;
+            this.selects.name = item.name;
+            this.options.push({ ...this.select });
+          });
+         
+          
+     
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+      retrieveTags() {
+      TagDataService.getAll()
+        .then(response => {
+          response.data.forEach((item, index) => {
+            this.option.value = item.id;
+            this.option.name = item.name;
+            this.options.push({ ...this.option });
+          });
+          
+                                
         })
         .catch(e => {
           console.log(e);
@@ -81,6 +150,10 @@ export default {
           console.log(e);
         });
     },
+     handleFileObject() {
+        this.tutorial.avatar = this.$refs.file.files[0]
+        this.tutorial.avatarName = this.tutorial.avatar.name
+      },
     updateTutorial() {
       TutorialDataService.update(this.currentTutorial.id, this.currentTutorial)
         .then(response => {
@@ -106,9 +179,11 @@ export default {
   mounted() {
     this.message = '';
     this.getTutorial(this.$route.params.id);
+    this.retrieveTags()
   }
 };
 </script>
 <style>
 
 </style>
+<style src="@vueform/multiselect/themes/default.css"></style>

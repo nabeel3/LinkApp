@@ -134,17 +134,19 @@ class PostController extends Controller
     public function show($id)
     {
         //
+        
 
-        $product = Post::find($id);
+        $post = Post::where('id', $id)->with(["comments.replies.user","comments.user","tags", "user"])->first();
+     
     
-        if (!$product) {
+        if (!$post) {
             return response()->json([
                 'success' => false,
                 'message' => 'Sorry, product not found.'
             ], 400);
         }
     
-        return $product;
+        return $post;
     }
 
     /**
