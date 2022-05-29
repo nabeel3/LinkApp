@@ -64,7 +64,7 @@
                             <h6 class="item-title mbr-fonts-style display-6"><strong>{{currentTutorial.title}}</strong></h6>
 
 
-                            <h6 class="item-subtitle mbr-fonts-style mt-1 display-7">Shared publicly - Jan 2020</h6>
+                            <h6 class="item-subtitle mbr-fonts-style mt-1 display-7">{{currentTutorial.created_at}}</h6>
                             
                             </div>
                         </div>
@@ -81,8 +81,8 @@
                         </div>
 
                       </div>
-                        <div v-if="currentTutorial.tags"> 
-                          <div v-for="(tag, index) in currentTutorial.tags" style="display: inherit;"> 
+                        <div v-if="currentTutorial.tags" style="display: flex!important"> 
+                          <div v-for="(tag, index) in currentTutorial.tags" > 
                            <button class="btn btn-success display-4">
                              {{tag.name}}
                           </button>
@@ -332,6 +332,8 @@ export default {
   },
 
     mounted: function() {
+      console.log(import.meta.env.BASE_URL),
+      
       console.log("Mounted!")
         this.retrieveTutorials();
     },

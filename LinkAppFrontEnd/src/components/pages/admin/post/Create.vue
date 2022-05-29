@@ -54,6 +54,13 @@
         <h4>You submitted successfully!</h4>
         <button class="btn btn-success" @click="newTutorial">Add</button>
       </div>
+
+      <div class="form-group">
+                    <div v-if="messageStatus" class="alert alert-danger" role="alert">
+                      {{message.title}}
+
+                    </div>
+                  </div>
   </div>
           </div>
     </div>
@@ -74,7 +81,9 @@ export default {
   name: "add-tutorial",
   data() {
     return {
+      message: [],
       options:[],
+      messageStatus: false,
 
           option: {
             value: "",
@@ -130,14 +139,26 @@ export default {
         title: this.tutorial.title,
         content: this.tutorial.content,
         image: this.tutorial.avatar,
-        tags: JSON.stringify(this.options),
+        tags: JSON.stringify(this.value),
       };
       
       TutorialDataService.create(data)
         .then(response => {
-          this.tutorial.id = response.data.id;
-          console.log(response.data);
-          this.submitted = true;
+
+         
+          if(!response.data.error)
+          {
+            this.tutorial.id = response.data.id;
+            this.submitted = true;
+          }
+          if(response.data.error){
+            console.log(response.data.error)
+             this.message = response.data.error,
+             this.messageStatus = true
+             messageStatus = false
+            
+          }
+          
         })
         .catch(e => {
           console.log(e);
