@@ -4,24 +4,24 @@
 
 ### composer
 
- Run `composer install` to install dependencies
- Run `php artisan migrate` to migrate database
- Run `php artisan storage:link` to storage link
- Run `php artisan serve` to start the server
+1. Run `composer install` to install dependencies
+2. Run `php artisan migrate` to migrate database
+3. Run `php artisan storage:link` to storage link
+4. Run `php artisan serve` to start the server
 
 
 ### npm
 
-9. Run `npm install` to install dependencies
-10. Run `npm run dev` to compile assets
+5. Run `npm install` to install dependencies
+6. Run `npm run dev` to compile assets
 
 ### env
 
- Create .env under linkAppFrontend folder and create varible a `VITE_APP_ROOT_API="YOUR_FRONTEND_URL"`
+7. Create .env under linkAppFrontend folder and create varible a `VITE_APP_ROOT_API="YOUR_FRONTEND_URL"`
 
 ### vite.config.js
 
-add laravel backedn url  
+8. Add laravel backedn url  
  server: {
     proxy: {
       '/api': {
