@@ -48,8 +48,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
 
         $data = $request->only('title', 'content','image');
 
@@ -73,13 +71,34 @@ class PostController extends Controller
 
         //Send failed response if request is not valid
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->messages()], 200);
+            return response()->json(['error' => $validator->messages()],400);
         }else
          {
-            $file = $request->file('image');
-            $name = '/avatars/' . uniqid() . '.' . $file->extension();
-            $url = $file->storePubliclyAs('public', $name);
-            $data['avatar'] = $name;
+
+            if($request->image){
+                $file = $request->file('image');
+                $name = '/avatars/' . uniqid() . '.' . $file->extension();
+                $url = $file->storePubliclyAs('public', $name);
+                $data['avatar'] = $name;
+
+                $post = new Post;
+ 
+                $post->title = $request->title;
+                $post->content = $request->content;
+                $post->image = env('APP_URL') . '/storage/' . $name;
+                $post->save();
+
+            }
+            else
+            {
+
+                $post = new Post;
+                $post->title = $request->title;
+                $post->content = $request->content;
+                $post->save();
+    
+            }
+           
 
 
             // $video= $request->file('image');
@@ -88,17 +107,11 @@ class PostController extends Controller
             // $destinationPath = 'uploads/videos';
             // $video->move($destinationPath, $input);
 
-            $post = new Post;
- 
-            $post->title = $request->title;
-            $post->content = $request->content;
-            $post->image = env('APP_URL') . '/storage/' . $name;
-            $post->save();
 
             if($request->tags){
                 $tags = json_decode($request->tags);
                 foreach($tags as $tag){
-                    $post->tags()->attach(($tag->value));
+                    $post->tags()->attach(($tag));
                 }
             }
 
