@@ -22,6 +22,7 @@
 ### vite.config.js
 
 8. Add laravel backedn url  
+ ```
  server: {
     proxy: {
       '/api': {
@@ -32,4 +33,4 @@
        }
   }
   }
-
+```
